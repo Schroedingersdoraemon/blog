@@ -5,6 +5,8 @@ date: 2021-05-16 11:32:45
 tags:
 ---
 
+# training part
+
 ```python
 import PIL
 import time
@@ -250,3 +252,76 @@ with torch.no_grad():
 print('accuracy: ', ac/total)
 ```
 
+# testing part
+
+```python
+import torch
+from torchvision import transforms
+from GoogLeNet_model import GoogLeNet
+from torch.utils.data import DataLoader
+from torchvision.datasets import CIFAR10
+```
+
+
+```python
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize(mean = (0.5, 0.5, 0.5),
+                        std = (0.5, 0.5, 0.5))
+])
+```
+
+
+```python
+test_set  = CIFAR10(
+    root = './cifar-10/',
+    train = False,
+    transform = transform
+)
+```
+
+
+```python
+test_loader = DataLoader(
+    test_set,
+    batch_size = 100,
+    shuffle = True,
+)
+```
+
+
+```python
+net = GoogLeNet()
+device = ('cuda' if torch.cuda.is_available() else 'cpu')
+print('Using: ', device)
+if not (device == 'cpu'):
+    net.to(device)
+```
+
+Using:  cuda
+
+
+
+```python
+net.load_state_dict(torch.load('./GoogLeNet_weights_0005_02.pkl'))
+```
+
+<All keys matched successfully>
+
+```python
+ac = 0
+total = 0 
+with torch.no_grad():
+    for i, (inputs, labels) in enumerate(test_loader):
+        if not (device =='cpu'):
+            inputs = inputs.to(device)
+            labels = labels.to(device)
+        y_hats = net(inputs)
+        y_pred = y_hats.argmax(dim = 1)
+        ac += (y_pred == labels).sum().item()
+        total += labels.size()[0]
+
+print('accuracy: ', ac/total)
+```
+
+accuracy:  0.6253
