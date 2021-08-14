@@ -53,26 +53,28 @@ LDFLAGS+= -L/opt/cuda/lib64 -lcuda -lcudart -lcublas -lcurand
 endif
 ```
 
-THen we need to look up the [compute capability](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capability) of our GPU [here](https://developer.nvidia.com/en/cuda-gpus). For instance, my GPU, *NVIDIA GeForece MX130*, is not listed in the form. According to some articles, however, this card is exactly the same as *GeForce 940MX*, the compute capability of which, in that form, is 5.0.
+Then we need to look up the [compute capability](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#compute-capability) of our GPU [here](https://developer.nvidia.com/en/cuda-gpus).
+
+For instance, my GPU, *NVIDIA GeForece MX130*, is not listed in the form. ~~According to some articles, however, this card is exactly the same as *GeForce 940MX*, the compute capability of which, in that form, is 5.0.~~ According to [wikipedia](https://en.wikipedia.org/wiki/CUDA), the compute capability is exactly 6.1
 
 Therefore, we need to change the architecture in *Makefile* for [cuda compatibility](https://docs.nvidia.com/deploy/cuda-compatibility/index.html#toolkit-versioning).
 
-In detail, change both the code to ten times of your compute capability, which is 50 for me.
+In detail, change both the code to ten times of your compute capability, which is 61 for me.
 
 ```
 # before
 ARCH= -gencode arch=compute_30,code=sm_30 \
       -gencode arch=compute_35,code=sm_35 \
-	  -gencode arch=compute_50,code=[sm_50,compute_50] \
-	  -gencode arch=compute_52,code=[sm_52,compute_52]
-	  #-gencode arch=compute_20,code=[sm_20,sm_21] \ This one is deprecated?
+      -gencode arch=compute_50,code=[sm_50,compute_50] \
+      -gencode arch=compute_52,code=[sm_52,compute_52]
+      #-gencode arch=compute_20,code=[sm_20,sm_21] \ This one is deprecated?
 
 # after
-ARCH= -gencode arch=compute_50,code=sm_50 \
+ARCH= -gencode arch=compute_61,code=sm_61 \
       -gencode arch=compute_35,code=sm_35 \
-	  -gencode arch=compute_50,code=[sm_50,compute_50] \
-	  -gencode arch=compute_52,code=[sm_52,compute_52]
-	  #-gencode arch=compute_20,code=[sm_20,sm_21] \ This one is deprecated?
+      -gencode arch=compute_50,code=[sm_50,compute_50] \
+      -gencode arch=compute_52,code=[sm_52,compute_52]
+      #-gencode arch=compute_20,code=[sm_20,sm_21] \ This one is deprecated?
 
 ```
 
