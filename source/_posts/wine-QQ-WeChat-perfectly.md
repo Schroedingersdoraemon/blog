@@ -50,6 +50,8 @@ REGEDIT4
 
 值得注意的是：现有字体应该为/usr/share/fonts/文件夹下的字体**文件名**，可用`fc-list`指令查询
 
+这里提供一份个人替换文件做为参考：[chn_font.reg](/images/wine-QQ-WeChat-perfectly/chn_font.reg)
+
 ### 3. 导入此文件到注册表，有两种方法，任选其一即可
 
 #### (1)
