@@ -7,6 +7,7 @@ date: 2021-08-15 10:25:56
 
 [The_Economist_20210814.pdf](/files/The_Economist_20210814.pdf)
 [The_Economist_20210821.pdf](/files/The_Economist_20210821.pdf)
+[The_Economist_20211002.pdf](/files/The_Economist_20211002.pdf)
 
 ## Miscellaneous
 
